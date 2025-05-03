@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageCarousel from '../components/ImageCarousel';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -13,12 +14,12 @@ export default function Home() {
             給也喜歡美好畫面的你們<br />
           </p>
 
-          <a
-            href="#about"
+          {/* <Link
+            to="#about"
             className="inline-block bg-[#00343C] text-white font-bold text-lg px-6 py-2 rounded tracking-widest"
           >
-            About Me
-          </a>
+            看更多
+          </Link> */}
         </div>
 
         {/* 右側：Swiper 輪播圖 */}

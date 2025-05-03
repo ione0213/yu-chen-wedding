@@ -1,22 +1,34 @@
-import React from 'react';
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  return (
-<nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="text-xl font-bold text-gray-800">陳 裕 Yu Chen</div>
+  // 動態樣式：當前頁面高亮
+  const desktopNavItemClass = ({ isActive }) =>
+    isActive
+      ? 'bg-gray-200 text-gray-500 px-4 py-2 rounded'
+      : 'hover:text-[#00343C] px-4 py-2';
 
-        {/* desktop menu */}
+  const mobileWebNavItemClass = ({ isActive }) =>
+    isActive
+      ? 'text-white text-sm tracking-widest'
+      : 'text-gray-600 text-sm tracking-widest'
+
+  return (
+    <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <NavLink to="/home" className="text-xl font-bold text-gray-800">
+          陳 裕 Yu Chen
+        </NavLink>
+
+        {/* 桌面版選單 */}
         <div className="hidden md:flex space-x-6 text-gray-700">
-          <a href="#home" className="hover:text-[#00343C]">首頁</a>
-          <a href="#about" className="hover:text-[#00343C]">關於我</a>
-          <a href="#plans" className="hover:text-[#00343C]">方案資訊</a>
-          <a href="#portfolio" className="hover:text-[#00343C]">作品集</a>
-          <a href="#contact" className="hover:text-[#00343C]">聯絡我</a>
+          <NavLink to="/home" className={desktopNavItemClass}>首頁</NavLink>
+          <NavLink to="/about" className={desktopNavItemClass}>關於我</NavLink>
+          <NavLink to="/plans" className={desktopNavItemClass}>方案資訊</NavLink>
+          <NavLink to="/gallery" className={desktopNavItemClass}>作品集</NavLink>
+          <NavLink to="/contact" className={desktopNavItemClass}>聯絡我</NavLink>
         </div>
 
         {/* 漢堡 icon */}
@@ -30,26 +42,19 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* mobile web menu */}
+      {/* 手機版選單 */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-gray-100 z-50 flex flex-col items-center justify-center space-y-4 text-gray-800 text-lg tracking-wide">
-          {/* close button */}
-          <button
-            className="absolute top-4 right-6 text-3xl"
-            onClick={() => setMenuOpen(false)}
-          >
+        <div className="fixed inset-0 bg-gray-300 z-50 flex flex-col items-center justify-center space-y-4 text-gray-800 text-lg tracking-wide">
+          <button className="absolute top-4 right-6 text-3xl" onClick={() => setMenuOpen(false)}>
             ✕
           </button>
 
-          <h2 className="text-sm text-gray-500 mb-4">HOME</h2>
-
-          <a href="#about" onClick={() => setMenuOpen(false)}>+ 關於我</a>
-          <a href="#plans" onClick={() => setMenuOpen(false)}>+ 方案資訊</a>
-          <a href="#portfolio" onClick={() => setMenuOpen(false)}>+ 作品集</a>
-          <a href="#contact" onClick={() => setMenuOpen(false)}>預約｜聯絡我</a>
-
-          <div className="text-gray-400 mt-8">－ － －</div>
-          <a href="#home" className="text-sm text-gray-600 mt-2" onClick={() => setMenuOpen(false)}>回主頁</a>
+          <NavLink to="/home" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>HOME</NavLink>
+          <NavLink to="/about" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>關於我</NavLink>
+          <NavLink to="/plans" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>方案資訊</NavLink>
+          <NavLink to="/gallery" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>作品集</NavLink>
+          <NavLink to="/contact" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>預約｜聯絡我</NavLink>
+          <div className="text-gray-500 mt-6">－ － －</div>
         </div>
       )}
     </nav>
