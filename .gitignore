@@ -26,3 +26,6 @@ dist-ssr
 *.jpg
 *.png
 *.jpeg
+**/*.jpg
+**/*.jpeg
+**/*.png
