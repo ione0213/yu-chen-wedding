@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, EffectFade } from 'swiper/modules';
 import Lightbox from 'yet-another-react-lightbox';
+
 import 'swiper/css';
-import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 import 'yet-another-react-lightbox/styles.css';
+
 
 const imageModules = import.meta.glob('../assets/homeSlider/*.{jpg,jpeg,png}', {
   eager: true,
   import: 'default',
 });
 
-const images = Object.values(imageModules)
+const images = Object.entries(imageModules)
   .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-  .map((mod) => mod);
+  .map(([, mod]) => mod);
 
 export default function ImageCarousel() {
   const [open, setOpen] = useState(false);
@@ -23,25 +25,31 @@ export default function ImageCarousel() {
     <>
       <div className="w-full aspect-[4/3] md:aspect-[3/2] rounded overflow-hidden shadow">
         <Swiper
-          modules={[Autoplay]}
+          modules={[Autoplay, EffectFade]}
           slidesPerView={1}
           loop={true}
+          speed={1000}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
           autoplay={{ delay: 4000 }}
-          
           className="w-full h-full"
         >
-          {images.map((src, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${src})` }}
-                onClick={() => setOpen(true)}
-              >
-              </div>
+          {images.map((src, i) => (
+            <SwiperSlide key={i}>
+              <img
+                src={src}
+                alt={`slide-${i}`}
+                onClick={() => {
+                  setOpen(true);
+                  setIndex(i);
+                }}
+                className="w-full h-full object-cover cursor-pointer"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
+
       <Lightbox
         open={open}
         close={() => setOpen(false)}
