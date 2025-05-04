@@ -2,20 +2,23 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import Lightbox from 'yet-another-react-lightbox';
+import { homeSliderImages } from './homeSliderImages';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'yet-another-react-lightbox/styles.css';
 
 
-const imageModules = import.meta.glob('../assets/homeSlider/*.{jpg,jpeg,png}', {
+/* const imageModules = import.meta.glob('../assets/homeSlider/*.{jpg,jpeg,png}', {
   eager: true,
   import: 'default',
-});
+}); */
 
-const images = Object.entries(imageModules)
+/* const images = Object.entries(imageModules)
   .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-  .map(([, mod]) => mod);
+  .map(([, mod]) => mod); */
+
+const images = homeSliderImages
 
 export default function ImageCarousel() {
   const [open, setOpen] = useState(false);

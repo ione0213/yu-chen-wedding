@@ -4,15 +4,16 @@ import { FaInstagram } from 'react-icons/fa';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import usePageTitle from '../hooks/usePageTitle';
+import { portfolioImages } from '../components/portfolioImages';
 
-const imageModules = import.meta.glob('../assets/portfolio/*.{jpg,jpeg,png}', {
+/* const imageModules = import.meta.glob('../assets/portfolio/*.{jpg,jpeg,png}', {
   eager: true,
   import: 'default',
-});
+}); */
 
-const sortedImages = Object.entries(imageModules)
+const sortedImages = Object.entries(portfolioImages)
   .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-  .map(([key, mod]) => ({ src: mod, filename: key }));
+  .map(([filename, src]) => ({ src, filename }));
 
 export default function Gallery() {
   const location = useLocation();
