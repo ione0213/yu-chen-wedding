@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import Lightbox from 'yet-another-react-lightbox';
@@ -18,11 +18,20 @@ import 'yet-another-react-lightbox/styles.css';
   .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
   .map(([, mod]) => mod); */
 
-const images = homeSliderImages
+function shuffleArray(array) {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
 
 export default function ImageCarousel() {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  const shuffledImages = useMemo(() => shuffleArray(homeSliderImages), []);
+
 
   return (
     <>
@@ -37,7 +46,7 @@ export default function ImageCarousel() {
           autoplay={{ delay: 4000 }}
           className="w-full h-full"
         >
-          {images.map((src, i) => (
+          {shuffledImages.map((src, i) => (
             <SwiperSlide key={i}>
               <img
                 src={src}
@@ -57,7 +66,7 @@ export default function ImageCarousel() {
         open={open}
         close={() => setOpen(false)}
         index={index}
-        slides={images.map((src) => ({ src }))}
+        slides={shuffledImages.map((src) => ({ src }))}
       />
     </>
   );
