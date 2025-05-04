@@ -18,13 +18,13 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <NavLink to="/home" className="text-xl font-bold text-gray-800">
+        <NavLink to="/" className="text-xl font-bold text-gray-800">
           陳 裕 Yu Chen
         </NavLink>
 
         {/* 桌面版選單 */}
         <div className="hidden md:flex space-x-6 text-gray-700">
-          <NavLink to="/home" className={desktopNavItemClass}>首頁</NavLink>
+          <NavLink to="/" className={desktopNavItemClass}>首頁</NavLink>
           <NavLink to="/about" className={desktopNavItemClass}>關於我</NavLink>
           <NavLink to="/gallery" className={desktopNavItemClass}>作品集</NavLink>
           <NavLink to="/plans" className={desktopNavItemClass}>方案資訊</NavLink>
@@ -49,7 +49,7 @@ export default function Navbar() {
             ✕
           </button>
 
-          <NavLink to="/home" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>HOME</NavLink>
+          <NavLink to="/" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>HOME</NavLink>
           <NavLink to="/about" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>關於我</NavLink>
           <NavLink to="/gallery" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>作品集</NavLink>
           <NavLink to="/plans" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>方案資訊</NavLink>

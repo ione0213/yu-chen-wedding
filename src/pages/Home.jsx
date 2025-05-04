@@ -1,8 +1,9 @@
 import React from 'react';
 import ImageCarousel from '../components/ImageCarousel';
-import { Link } from 'react-router-dom';
+import usePageTitle  from '../hooks/usePageTitle';
 
 export default function Home() {
+  usePageTitle(location.pathname)
   return (
     <section id="home" className="w-full px-4 py-12 md:py-20 max-w-7xl mx-auto">
       {/* RWD container */}
@@ -14,12 +15,7 @@ export default function Home() {
             給也喜歡美好畫面的你們<br />
           </p>
 
-          {/* <Link
-            to="#about"
-            className="inline-block bg-[#00343C] text-white font-bold text-lg px-6 py-2 rounded tracking-widest"
-          >
-            看更多
-          </Link> */}
+      
         </div>
 
         {/* 右側：Swiper 輪播圖 */}
