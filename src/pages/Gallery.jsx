@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaInstagram } from 'react-icons/fa';
 import Lightbox from 'yet-another-react-lightbox';
@@ -10,7 +10,6 @@ const imageModules = import.meta.glob('../assets/portfolio/*.{jpg,jpeg,png}', {
   import: 'default',
 });
 
-// 按檔名排序的 URL 陣列
 const sortedImages = Object.entries(imageModules)
   .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
   .map(([key, mod]) => ({ src: mod, filename: key }));
@@ -22,9 +21,22 @@ export default function Gallery() {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
+  // Determine aspect ratios and layout groups
+  const imageRefs = useRef([]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const updateSizes = () => {
+      imageRefs.current = imageRefs.current.slice(0, sortedImages.length);
+    };
+    updateSizes();
+    window.addEventListener('resize', updateSizes);
+    return () => window.removeEventListener('resize', updateSizes);
+  }, []);
+
   return (
-    <section id="gallery" className="bg-white py-12 px-4 max-w-7xl mx-auto">
-      {/* IG Link Block */}
+<section id="gallery" className="bg-white py-12 px-4 max-w-screen-2xl mx-auto">
+{/* IG Link Block */}
       <div className="mb-8 text-center">
         <a
           href="https://www.instagram.com/_yu_cc_"
@@ -32,27 +44,56 @@ export default function Gallery() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-[#E4405F] font-medium text-lg hover:underline"
         >
-          <FaInstagram size={24} />
+          <FaInstagram size={20} />
           Instagram 即時作品更新
         </a>
       </div>
 
-      {/* 圖片自動排列，保證順序一致，橫幅不壓縮 */}
-      <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+      {/* Desktop Layout */}
+      <div className="hidden md:flex md:flex-wrap md:gap-4">
         {sortedImages.map(({ src }, i) => (
-          <img
+          <div
             key={i}
-            src={src}
-            alt={`wedding-${i + 1}`}
-            className="w-full mb-4 rounded shadow hover:opacity-90 transition cursor-pointer inline-block"
+            ref={el => imageRefs.current[i] = el}
+            className="cursor-pointer overflow-hidden rounded shadow hover:opacity-90 transition"
+            style={{ flex: '0 0 auto', maxWidth: '100%' }}
             onClick={() => {
               setIndex(i);
               setOpen(true);
             }}
-          />
+          >
+            <img
+              src={src}
+              alt={`wedding-${i + 1}`}
+              className="h-[400px] w-auto object-contain"
+              loading="lazy"
+            />
+          </div>
         ))}
       </div>
 
+      {/* Mobile Layout */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {sortedImages.map(({ src }, i) => (
+          <div
+            key={i}
+            className="cursor-pointer"
+            onClick={() => {
+              setIndex(i);
+              setOpen(true);
+            }}
+          >
+            <img
+              src={src}
+              alt={`wedding-${i + 1}`}
+              className="w-full h-auto rounded shadow hover:opacity-90 transition"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox Popup */}
       <Lightbox
         open={open}
         close={() => setOpen(false)}

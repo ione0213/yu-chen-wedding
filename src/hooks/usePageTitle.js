@@ -1,12 +1,11 @@
-// src/hooks/usePageTitle.js
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 const routeTitles = {
   '/': '首頁',
   '/home': '首頁',
   '/about': '關於我',
   '/gallery': '作品集',
+  '/contact': '預約 | 聯絡我'
   // 可擴充更多頁面
 };
 

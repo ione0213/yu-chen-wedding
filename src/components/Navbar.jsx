@@ -24,11 +24,11 @@ export default function Navbar() {
 
         {/* 桌面版選單 */}
         <div className="hidden md:flex space-x-6 text-gray-700">
-          <NavLink to="/" className={desktopNavItemClass}>首頁</NavLink>
+          <NavLink to="/" className={desktopNavItemClass}>HOME</NavLink>
           <NavLink to="/about" className={desktopNavItemClass}>關於我</NavLink>
           <NavLink to="/gallery" className={desktopNavItemClass}>作品集</NavLink>
-          <NavLink to="/plans" className={desktopNavItemClass}>方案資訊</NavLink>
-          <NavLink to="/contact" className={desktopNavItemClass}>聯絡我</NavLink>
+          {/* <NavLink to="/plans" className={desktopNavItemClass}>方案資訊</NavLink> */}
+          <NavLink to="/contact" className={desktopNavItemClass}>預約｜聯絡我</NavLink>
         </div>
 
         {/* 漢堡 icon */}
@@ -52,7 +52,7 @@ export default function Navbar() {
           <NavLink to="/" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>HOME</NavLink>
           <NavLink to="/about" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>關於我</NavLink>
           <NavLink to="/gallery" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>作品集</NavLink>
-          <NavLink to="/plans" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>方案資訊</NavLink>
+          {/* <NavLink to="/plans" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>方案資訊</NavLink> */}
           <NavLink to="/contact" onClick={() => setMenuOpen(false)} className={mobileWebNavItemClass}>預約｜聯絡我</NavLink>
           <div className="text-gray-500 mt-6">－ － －</div>
         </div>
